@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginView: View {
     
     @State var text: String = ""
+    @State var bindingValue = true
     var placeholderText: String = LoginStrings.placeholderText.rawValue
     
     private let symbols = [
@@ -31,17 +32,13 @@ struct LoginView: View {
                         Text(LoginStrings.welcome.rawValue)
                         UniTextField(placeholder: placeholderText, text: $text)
                         
-                        Button(action: {
+                        UniButton(title: LoginStrings.login.rawValue, action: {
                             
-                        }, label: {
-                            HStack (spacing: 2){
-                                Text(LoginStrings.info.rawValue)
-                                    .foregroundStyle(Color.black)
-                                Image(systemName: "info.circle")
-                                    .foregroundStyle(Color.black)
-                            }
-                            .padding(.top, 20)
-                        })
+                        }, icon: "", isEnabled: $bindingValue)
+                        
+                        UniButton(title: LoginStrings.info.rawValue, action: {
+                            
+                        }, icon: "info.circle", isEnabled: $bindingValue)
                     }
                     .frame(width: midWidth)
                     
@@ -63,7 +60,7 @@ struct LoginView: View {
             
             Text(LoginStrings.appVersion.rawValue
                 .replacingOccurrences(of: "%1", with: getAppVersion()))
-            .foregroundStyle(Color.lightBlue)
+            .foregroundStyle(Color.simpleBlue)
             .ignoresSafeArea(.keyboard)
         }
     }
@@ -74,6 +71,7 @@ struct LoginView: View {
         case rightSideDescription = "L'università mi sta travolgendo, è ora di creare un'app per pianificare meglio il mio percorso di studi... e questo è tutto."
         case appVersion = "Versione app: %1"
         case info = "Info"
+        case login = "Accedi"
     }
 }
 

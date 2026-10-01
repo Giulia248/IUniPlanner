@@ -30,6 +30,6 @@ public func hideLoading() {
 extension Color {
     static let darkBlue = Color(red: 3/255, green: 4/255, blue: 94/255)
     static let simpleBlue = Color(red: 0/255, green: 119/255, blue: 182/255)
-    static let lightBlue = Color(red: 173/255, green: 232/255, blue: 244/255)
+    static let lightBlue = Color(red: 173/255, green: 232/255, blue: 244/255).opacity(0.2)
 }
 
