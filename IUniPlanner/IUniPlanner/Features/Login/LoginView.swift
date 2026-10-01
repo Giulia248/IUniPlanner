@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @State private var showingSheet = false
     @State var text: String = ""
     @State var bindingValue = true
     var placeholderText: String = LoginStrings.placeholderText.rawValue
@@ -24,34 +25,51 @@ struct LoginView: View {
     
     var body: some View {
         
-        VStack(alignment: .center) {
+        ZStack {
             
-            // top Side
+            Color.lightBlue
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .ignoresSafeArea(.all)
+                .opacity(showingSheet ? 1.0 : 0.0)
             
-            VStack (alignment: .leading) { // top Side
+            VStack(alignment: .center) {
                 
-                HStack {
-                    Spacer()
-                    RotatingImages(images: symbols)
-                    Spacer()
+                // top Side
+                
+                VStack (alignment: .leading) { // top Side
+                    
+                    HStack {
+                        Spacer()
+                        RotatingImages(images: symbols)
+                        Spacer()
+                    }
+                   
+                }
+                .frame(height: (screenSize.height / 3))
+                
+                // bottom Side
+                VStack(alignment: .leading){ // bottom Side
+                    Text(LoginStrings.welcome.rawValue)
+                    UniTextField(placeholder: placeholderText, text: $text)
+                    
+                    UniButton(title: LoginStrings.login.rawValue, action: {
+                        
+                    }, icon: "", isEnabled: $bindingValue)
+                    
+                    UniButton(title: LoginStrings.info.rawValue, action: {
+                        showingSheet.toggle()
+                    }, icon: "info.circle", isEnabled: $bindingValue)
                 }
             }
-            .frame(height: (UIScreen.main.bounds.height / 3))
-            
-            // bottom Side
-            VStack(alignment: .leading){ // bottom Side
-                Text(LoginStrings.welcome.rawValue)
-                UniTextField(placeholder: placeholderText, text: $text)
-                
-                UniButton(title: LoginStrings.login.rawValue, action: {
-                    
-                }, icon: "", isEnabled: $bindingValue)
-                
-                UniButton(title: LoginStrings.info.rawValue, action: {
-                    
-                }, icon: "info.circle", isEnabled: $bindingValue)
+            .opacity(showingSheet ? 0.0 : 1.0)
+            .sheet(isPresented: $showingSheet) {
+                InfoView()
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
             }
         }
+        
+        
     }
     
     private enum LoginStrings: String {
