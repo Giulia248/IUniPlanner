@@ -23,7 +23,7 @@ struct RotatingImages: View {
                         )
                     )
                 )
-                .offset(y: -30)
+                .offset(y: -80)
                 .rotationEffect(
                     .degrees(Double(index) * 90)
                 )

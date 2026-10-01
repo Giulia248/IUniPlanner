@@ -22,6 +22,8 @@ struct UniTextField: View {
     
     @FocusState private var isFocused: Bool
     
+    var width: CGFloat = UIScreen.main.bounds.width / 3
+    
     var body: some View {
         VStack(alignment: .leading, spacing: spacing) {
             TextField(
@@ -39,6 +41,7 @@ struct UniTextField: View {
                 .frame(height: lineHeight)
                 .animation(.easeInOut(duration: 0.15), value: isFocused)
         }
+        .frame(width: width)
     }
 }
 
