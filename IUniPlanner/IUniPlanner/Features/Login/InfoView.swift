@@ -14,28 +14,27 @@ struct InfoView: View {
         "ProgressHUD - https://github.com/relatedcode/progresshud"]
     
     var body: some View {
-        VStack (alignment: .leading){
-            VStack (alignment: .leading, spacing: 20){
-                Text(InfoStrings.welcome.rawValue)
-                    .foregroundStyle(Color.darkBlue)
-                Text(InfoStrings.description.rawValue)
-                
-                VStack(alignment: .leading) {
-                    Text(InfoStrings.sdkUsed.rawValue)
+        ZStack {
+            RotatingImages(images: ["info", "info", "info", "info"])
+            VStack (alignment: .leading){
+                VStack (alignment: .leading, spacing: 20){
+                    Text(InfoStrings.welcome.rawValue)
+                        .foregroundStyle(Color.darkBlue)
+                    Text(InfoStrings.description.rawValue)
                     
-                    ForEach(packages, id: \.self){ content in
-                        Text("- \(content)")
-                            .padding(.horizontal, 12)
+                    VStack(alignment: .leading) {
+                        Text(InfoStrings.sdkUsed.rawValue)
+                        
+                        ForEach(packages, id: \.self){ content in
+                            Text("- \(content)")
+                                .padding(.horizontal, 12)
+                        }
+                        Text(InfoStrings.appVersion.rawValue
+                            .replacingOccurrences(of: "%1", with: getAppVersion()))
                     }
-                    Text(InfoStrings.appVersion.rawValue
-                        .replacingOccurrences(of: "%1", with: getAppVersion()))
+                    .padding(.vertical, 8)
+                    
                 }
-                .padding(.vertical, 8)
-                
-                
-                
-                RotatingImages(images: ["info", "info", "info", "info"])
-                    .frame(maxWidth: .infinity, maxHeight: 1, alignment: .center)
             }
         }
         .padding(8)

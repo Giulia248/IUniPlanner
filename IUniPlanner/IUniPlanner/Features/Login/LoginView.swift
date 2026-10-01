@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginView: View {
     
     @State private var showingSheet = false
-    @State var text: String = ""
+    @State var usernameText: String = ""
     @State var bindingValue = true
     var placeholderText: String = LoginStrings.placeholderText.rawValue
     
@@ -38,19 +38,15 @@ struct LoginView: View {
                 
                 VStack (alignment: .leading) { // top Side
                     
-                    HStack {
-                        Spacer()
-                        RotatingImages(images: symbols)
-                        Spacer()
-                    }
+                    RotatingImages(images: symbols)
+                    .frame(maxWidth: .infinity, alignment: .center)
                    
                 }
-                .frame(height: (screenSize.height / 3))
-                
+               
                 // bottom Side
                 VStack(alignment: .leading){ // bottom Side
                     Text(LoginStrings.welcome.rawValue)
-                    UniTextField(placeholder: placeholderText, text: $text)
+                    UniTextField(placeholder: placeholderText, text: $usernameText)
                     
                     UniButton(title: LoginStrings.login.rawValue, action: {
                         
