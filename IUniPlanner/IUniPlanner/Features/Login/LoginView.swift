@@ -17,44 +17,41 @@ struct LoginView: View {
         "book.pages",
         "book.and.wrench.fill",
         "apple.books.pages",
+        "info.circle.text.page",
+        "icloud.and.arrow.down",
         "cpu"
     ]
-    private let midWidth = UIScreen.main.bounds.width / 2
     
     var body: some View {
+        
+        VStack(alignment: .center) {
             
-            VStack(alignment: .center) {
-                    
-                // top Side
+            // top Side
+            
+            VStack (alignment: .leading) { // top Side
                 
-                VStack (alignment: .leading) { // top Side
-                    
-                    HStack {
-                        Spacer()
-                        RotatingImages(images: symbols)
-                        Spacer()
-                    }
+                HStack {
+                    Spacer()
+                    RotatingImages(images: symbols)
+                    Spacer()
                 }
-//                .frame(width: midWidth - 50)
-                
-                    // bottom Side
-                    VStack(alignment: .leading){ // bottom Side
-                        Text(LoginStrings.welcome.rawValue)
-                        UniTextField(placeholder: placeholderText, text: $text)
-                        
-                        UniButton(title: LoginStrings.login.rawValue, action: {
-                            
-                        }, icon: "", isEnabled: $bindingValue)
-                        
-                        UniButton(title: LoginStrings.info.rawValue, action: {
-                            
-                        }, icon: "info.circle", isEnabled: $bindingValue)
-                    }
-//                    .frame(width: midWidth)
-                    
             }
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//            .ignoresSafeArea()
+            .frame(height: (UIScreen.main.bounds.height / 3))
+            
+            // bottom Side
+            VStack(alignment: .leading){ // bottom Side
+                Text(LoginStrings.welcome.rawValue)
+                UniTextField(placeholder: placeholderText, text: $text)
+                
+                UniButton(title: LoginStrings.login.rawValue, action: {
+                    
+                }, icon: "", isEnabled: $bindingValue)
+                
+                UniButton(title: LoginStrings.info.rawValue, action: {
+                    
+                }, icon: "info.circle", isEnabled: $bindingValue)
+            }
+        }
     }
     
     private enum LoginStrings: String {
