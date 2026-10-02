@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  StartView.swift
 //  IUniPlanner
 //
 //  Created by giulia.floris on 01/10/2026.
@@ -7,13 +7,12 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct StartView: View {
     
     @State private var showingSheet = false
     @State var usernameText: String = ""
-    @State var loginBindingValue = false
+    @State var loginBindingValue = true
     @State var infoBindingValue = true
-    var placeholderText: String = LoginStrings.placeholderText.rawValue
     
     private let symbols = [
         "book.pages",
@@ -40,24 +39,21 @@ struct LoginView: View {
                 VStack (alignment: .leading) { // top Side
                     
                     RotatingImages(images: symbols)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                   
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
                 }
-               
+                
                 // bottom Side
                 VStack(alignment: .leading){ // bottom Side
-                    Text(LoginStrings.welcome.rawValue)
-                    UniTextField(placeholder: placeholderText, text: $usernameText)
+                    Text(StartView.welcome.rawValue)
                     
-                    UniButton(title: LoginStrings.login.rawValue, action: {
-                        let _ = LocalStorage.shared.user(set: true, user: UserModel(name: usernameText))
-                        print("User OK \(LocalStorage.shared.user(set: false) ?? UserModel())")
+                    Text(self.usernameText)
+                    
+                    UniButton(title: StartView.login.rawValue, action: {
+                        
                     }, icon: "", isEnabled: $loginBindingValue)
-                    .onChange(of: usernameText) { _, new in
-                        loginBindingValue = !(new.isEmpty)
-                    }
                     
-                    UniButton(title: LoginStrings.info.rawValue, action: {
+                    UniButton(title: StartView.info.rawValue, action: {
                         showingSheet.toggle()
                     }, icon: "info.circle", isEnabled: $infoBindingValue)
                 }
@@ -69,20 +65,25 @@ struct LoginView: View {
                     .presentationDragIndicator(.visible)
             }
         }
-        
-        
+        .onAppear {
+            if let username = LocalStorage.shared.user(set: false)  {
+                self.usernameText = username.name ?? StartView.error1.rawValue
+            } else {
+                self.usernameText = StartView.error1.rawValue
+            }
+            
+        }
     }
     
-    private enum LoginStrings: String {
+    private enum StartView: String {
         case welcome = "Benvenuto su IUniPlanner"
-        case placeholderText = "Username"
-        case appVersion = "Versione app: %1"
+        case error1 = "errore nel recuperare l'user"
         case info = "Info"
-        case login = "Accedi"
+        case login = "Inizia"
     }
 }
 
 
 #Preview {
-    LoginView()
+    StartView()
 }

@@ -17,13 +17,30 @@ class LocalStorage {
 //        showLoading()
         if set {
             guard let user = user else { return nil }
-            defaults.set(user, forKey: userKey)
-//            hideLoading()
-            return nil
+            do {
+                let data = try JSONEncoder().encode(user)
+                defaults.set(data, forKey: "userKey")
+                return nil
+            } catch {
+                print("Failed to save user: \(error)")
+                return nil
+            }
         } else {
-            let user = defaults.object(forKey: userKey) as? UserModel ?? UserModel()
-//            hideLoading()
-            return user
+            
+            if let data = defaults.data(forKey: "userKey") {
+                do {
+                    let user = try JSONDecoder().decode(
+                        UserModel.self,
+                        from: data
+                    )
+                    return user
+                } catch {
+                    return nil
+                }
+            } else {
+                return nil
+            }
+
         }
     }
 

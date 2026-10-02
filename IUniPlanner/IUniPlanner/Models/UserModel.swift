@@ -6,7 +6,7 @@
 //
 
 
-public struct UserModel {
+public struct UserModel: Codable {
     var name: String?
     
 }
