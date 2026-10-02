@@ -10,11 +10,13 @@ import Foundation
 class LocalStorage {
     static let shared = LocalStorage()
     
+    private init() { }
+    
     private let userKey = "userKey"
     private let defaults = UserDefaults.standard
-
+    
     internal func user(set: Bool, user: UserModel? = nil)  -> UserModel? {
-//        showLoading()
+        //        showLoading()
         if set {
             guard let user = user else { return nil }
             do {
@@ -22,7 +24,7 @@ class LocalStorage {
                 defaults.set(data, forKey: "userKey")
                 return nil
             } catch {
-                print("Failed to save user: \(error)")
+                uLog("Failed to save user: \(error)")
                 return nil
             }
         } else {
@@ -40,9 +42,15 @@ class LocalStorage {
             } else {
                 return nil
             }
-
+            
         }
     }
-
-    private init() { }
+    public func deleteData(){
+        let domain = Bundle.main.bundleIdentifier ?? ""
+        defaults.removePersistentDomain(forName: domain)
+        defaults.synchronize()
+    }
+    
+    
+    
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StartView: View {
     
+    @Binding var refreshPage: Bool
     @State private var showingSheet = false
     @State var usernameText: String = ""
     @State var loginBindingValue = true
@@ -53,6 +54,15 @@ struct StartView: View {
                         
                     }, icon: "", isEnabled: $loginBindingValue)
                     
+                    UniButton(title: StartView.deleteUser.rawValue, action: {
+                        
+                        showLoading()
+                        LocalStorage.shared.deleteData()
+                        refreshPage.toggle()
+                        hideLoading()
+                        
+                    }, icon: "trash.fill", isEnabled: $loginBindingValue)
+                    
                     UniButton(title: StartView.info.rawValue, action: {
                         showingSheet.toggle()
                     }, icon: "info.circle", isEnabled: $infoBindingValue)
@@ -80,10 +90,12 @@ struct StartView: View {
         case error1 = "errore nel recuperare l'user"
         case info = "Info"
         case login = "Inizia"
+        case deleteUser = "Cancella dati"
     }
 }
 
 
 #Preview {
-    StartView()
+    @Previewable @State var refreshPage = true
+    StartView(refreshPage: $refreshPage)
 }

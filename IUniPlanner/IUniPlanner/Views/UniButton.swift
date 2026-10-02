@@ -22,7 +22,7 @@ struct UniButton: View {
     var cornerRadius: CGFloat = 12
     var borderWidth: CGFloat = 1
     var height: CGFloat = 50
-    var width: CGFloat = screenSize.width / 3
+    var width: CGFloat = screenSize.width / 2
     
     
     var body: some View {

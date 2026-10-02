@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct IUniPlannerApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            IUniPlannerView()
         }
     }
 }

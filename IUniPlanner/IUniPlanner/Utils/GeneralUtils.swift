@@ -15,9 +15,11 @@ public func getAppVersion() -> String {
 }
 
 public func showLoading() {
-        ProgressHUD.animationType = .dualDotSidestep
-        ProgressHUD.colorAnimation = Color.darkBlue
-        ProgressHUD.animate("", interaction: false)
+    ProgressHUD.animationType = .dualDotSidestep
+    ProgressHUD.colorAnimation = Color.darkBlue
+        ProgressHUD.colorHUD = .clear
+        ProgressHUD.colorBackground = .clear
+    ProgressHUD.animate("", interaction: false)
     
 }
 
@@ -27,7 +29,13 @@ public func hideLoading() {
     }
 }
 
+public func uLog(_ string: String) {
+    print(string)
+    SessionManager.shared.printInfos?.append(string)
+}
+
 public var screenSize = UIScreen.main.bounds
+public var debug = true
 
 extension Color {
     static let darkBlue = Color(red: 3/255, green: 4/255, blue: 94/255)
