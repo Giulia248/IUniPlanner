@@ -56,10 +56,8 @@ struct StartView: View {
                     
                     UniButton(title: StartView.deleteUser.rawValue, action: {
                         
-                        showLoading()
                         LocalStorage.shared.deleteData()
                         refreshPage.toggle()
-                        hideLoading()
                         
                     }, icon: "trash.fill", isEnabled: $loginBindingValue)
                     

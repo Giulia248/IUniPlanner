@@ -52,10 +52,8 @@ struct LoginView: View {
                     UniTextField(placeholder: placeholderText, text: $usernameText)
                     
                     UniButton(title: LoginStrings.login.rawValue, action: {
-                        showLoading()
                         let _ = LocalStorage.shared.user(set: true, user: UserModel(name: usernameText))
                         uLog("User OK \(LocalStorage.shared.user(set: false) ?? UserModel())")
-                        hideLoading()
                     }, icon: "", isEnabled: $loginBindingValue)
                     .onChange(of: usernameText) { _, new in
                         loginBindingValue = !(new.isEmpty)

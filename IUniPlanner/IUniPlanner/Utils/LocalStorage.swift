@@ -16,7 +16,7 @@ class LocalStorage {
     private let defaults = UserDefaults.standard
     
     internal func user(set: Bool, user: UserModel? = nil)  -> UserModel? {
-        //        showLoading()
+        
         if set {
             guard let user = user else { return nil }
             do {

@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import ProgressHUD
 
 public struct IUniPlannerView: View {
-    
-    
     @State private var refreshPage = true
+    @State private var isLoading = false
+    
     public var body: some View {
         ZStack (alignment: .topTrailing){
             topTools
@@ -27,15 +26,17 @@ public struct IUniPlannerView: View {
                 refreshPage.toggle()
             })
         }
-        .progressHUD()
+        .loading(isLoading)
     }
     
     var topTools: some View{
             HStack {
                 
                 Button(action: {
-                    showLoading()
-                    hideLoading()
+                    isLoading = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                        isLoading = false
+                    })
                 }, label: {
                     Image(systemName: "person.badge.clock")
                         .foregroundStyle(Color.gray)

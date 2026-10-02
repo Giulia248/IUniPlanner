@@ -11,7 +11,7 @@ internal import Combine
 struct InfoView: View {
 
     private let packages = ["SwiftUi",
-        "ProgressHUD - https://github.com/relatedcode/progresshud"]
+    ]
     
     var body: some View {
         ZStack {

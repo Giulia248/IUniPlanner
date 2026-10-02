@@ -7,26 +7,10 @@
 
 import Foundation
 import SwiftUI
-import ProgressHUD
 
 public func getAppVersion() -> String {
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     return appVersion ?? ""
-}
-
-public func showLoading() {
-    ProgressHUD.animationType = .dualDotSidestep
-    ProgressHUD.colorAnimation = Color.darkBlue
-        ProgressHUD.colorHUD = .clear
-        ProgressHUD.colorBackground = .clear
-    ProgressHUD.animate("", interaction: false)
-    
-}
-
-public func hideLoading() {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-        ProgressHUD.dismiss()
-    }
 }
 
 public func uLog(_ string: String) {
