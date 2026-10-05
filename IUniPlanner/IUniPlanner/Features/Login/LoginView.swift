@@ -11,6 +11,7 @@ struct LoginView: View {
     
     
     @State private var showingSheet = false
+    @State private var navigateToHome = false
     @State var usernameText: String = ""
     @State var loginBindingValue = false
     @State var infoBindingValue = true
@@ -27,50 +28,55 @@ struct LoginView: View {
     
     
     var body: some View {
-        
-        ZStack {
-            
-            Color.lightBlue
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                .ignoresSafeArea(.all)
-                .opacity(showingSheet ? 1.0 : 0.0)
-            
-            VStack(alignment: .center) {
+        NavigationStack {
+            ZStack {
                 
-                // top Side
+                Color.lightBlue
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                    .ignoresSafeArea(.all)
+                    .opacity(showingSheet ? 1.0 : 0.0)
                 
-                VStack (alignment: .leading) { // top Side
+                VStack(alignment: .center) {
                     
-                    RotatingImages(images: symbols)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                   
-                }
-               
-                // bottom Side
-                VStack(alignment: .leading){ // bottom Side
-                    Text(LoginStrings.welcome.rawValue)
-                    UniTextField(placeholder: placeholderText, text: $usernameText)
+                    // top Side
                     
-                    UniButton(title: LoginStrings.login.rawValue, action: {
-                        let _ = LocalStorage.shared.user(set: true, user: UserModel(name: usernameText))
-                        uLog("User OK \(LocalStorage.shared.user(set: false) ?? UserModel())")
-                    }, icon: "", isEnabled: $loginBindingValue)
-                    .onChange(of: usernameText) { _, new in
-                        loginBindingValue = !(new.isEmpty)
+                    VStack (alignment: .leading) { // top Side
+                        
+                        RotatingImages(images: symbols)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        
                     }
                     
-                    UniButton(title: LoginStrings.info.rawValue, action: {
-                        showingSheet.toggle()
-                    }, icon: "info.circle", isEnabled: $infoBindingValue)
+                    // bottom Side
+                    VStack(alignment: .leading){ // bottom Side
+                        Text(LoginStrings.welcome.rawValue)
+                        UniTextField(placeholder: placeholderText, text: $usernameText)
+                        
+                        UniButton(title: LoginStrings.login.rawValue, action: {
+                            let _ = LocalStorage.shared.user(set: true, user: UserModel(name: usernameText))
+                            uLog("User OK \(LocalStorage.shared.user(set: false) ?? UserModel())")
+                            navigateToHome = true
+                        }, icon: "", isEnabled: $loginBindingValue)
+                        .onChange(of: usernameText) { _, new in
+                            loginBindingValue = !(new.isEmpty)
+                        }
+                        
+                        UniButton(title: LoginStrings.info.rawValue, action: {
+                            showingSheet.toggle()
+                        }, icon: "info.circle", isEnabled: $infoBindingValue)
+                    }
+                }
+                .opacity(showingSheet ? 0.0 : 1.0)
+                .sheet(isPresented: $showingSheet) {
+                    InfoView()
+                        .presentationDetents([.medium])
+                        .presentationDragIndicator(.visible)
                 }
             }
-            .opacity(showingSheet ? 0.0 : 1.0)
-            .sheet(isPresented: $showingSheet) {
-                InfoView()
-                    .presentationDetents([.medium])
-                    .presentationDragIndicator(.visible)
+            .navigationDestination(isPresented: $navigateToHome) {
+                HomeView()
             }
-        }
+        } // NavigationStack
         
         
     }
